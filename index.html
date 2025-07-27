@@ -224,9 +224,33 @@
             transform: translate(-50%, -50%) scale(1.05); /* Ligeramente más grande */
         }
 
-        /* Clase para ocultar el botón */
-        .hidden {
-            display: none !important;
+        /* Estilos para el aviso de volumen */
+        #volume-notice {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: center;
+            z-index: 998;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            animation: fadeInOut 4s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
         }
 
         /* Estilos para los emojis flotantes */
@@ -265,6 +289,11 @@
             100% { opacity: 0; transform: translate(var(--end-x), var(--end-y)) scale(0.8); }
         }
 
+        /* Clase para ocultar el botón */
+        .hidden {
+            display: none !important;
+        }
+
         /* Media queries mejorados para iPhone y dispositivos móviles */
         @media (max-width: 768px) {
             body {
@@ -296,6 +325,10 @@
                 left: 50vw;
                 transform: translate(-50%, -50%);
             }
+            #volume-notice {
+                font-size: 1.1em;
+                padding: 15px 25px;
+            }
             .emoji-float {
                 font-size: 1.5em;
             }
@@ -325,6 +358,10 @@
                 top: 50vh;
                 left: 50vw;
                 transform: translate(-50%, -50%);
+            }
+            #volume-notice {
+                font-size: 1em;
+                padding: 12px 20px;
             }
             .emoji-float {
                 font-size: 1.2em;
@@ -376,6 +413,11 @@
     <!-- Botón para iniciar la canción y las animaciones -->
     <button id="startButton">¡Comenzar!</button>
 
+    <!-- Aviso de volumen -->
+    <div id="volume-notice" class="hidden">
+        🔊 Sube el volumen para una mejor experiencia 🔊
+    </div>
+
     <!-- Elemento de audio para la canción -->
     <audio id="song">
         <!-- Fuente de la canción -->
@@ -398,6 +440,7 @@
             const particleCanvas = document.getElementById('particle-canvas');
             const ctx = particleCanvas.getContext('2d');
             const startButton = document.getElementById('startButton');
+            const volumeNotice = document.getElementById('volume-notice');
 
             // Ajustar el tamaño del canvas de partículas al de la ventana
             particleCanvas.width = window.innerWidth;
@@ -420,6 +463,7 @@
                 { time: 80.58, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 83.80, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 87.20, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
+                { time: 90.60, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 177.10, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 183.64, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 189.30, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
@@ -609,9 +653,19 @@
                 const fadeIntervalId = setInterval(fadeStep, fadeInterval);
             }
 
+            // Función para mostrar el aviso de volumen
+            function showVolumeNotice() {
+                volumeNotice.classList.remove('hidden');
+                // Ocultar automáticamente después de 4 segundos
+                setTimeout(() => {
+                    volumeNotice.classList.add('hidden');
+                }, 4000);
+            }
+
             // Función para iniciar la reproducción de la canción y las animaciones
             function startSongAndAnimations() {
                 startButton.classList.add('hidden'); // Ocultar el botón de inicio
+                showVolumeNotice(); // Mostrar aviso de volumen
                 song.currentTime = lyricsData[0].time - initialDelay; // Ajustar el tiempo de inicio
                 song.play().then(() => {
                     fadeInAudio(); // Iniciar el fade-in del audio
@@ -648,13 +702,14 @@
                     // Mostrar la letra y traducción correcta según el tiempo actual de la canción
                     // Iterar sobre las letras para encontrar la correcta
                     let foundLyric = false;
-                    for (let i = currentLyricIndex; i < lyricsData.length; i++) {
+                    for (let i = 0; i < lyricsData.length; i++) {
                         const lyric = lyricsData[i];
                         const nextLyricTime = (i + 1 < lyricsData.length) ? lyricsData[i + 1].time : Infinity;
 
                         // Si el tiempo actual está dentro del rango de esta letra
                         if (currentTime >= lyric.time && currentTime < nextLyricTime) {
                             if (currentLyricElement.textContent !== lyric.text) { // Solo actualizar si la letra es diferente
+                                console.log(`Showing lyric at ${currentTime}: ${lyric.text}`); // Debug
                                 currentLyricElement.textContent = lyric.text;
                                 currentTranslationElement.textContent = lyric.translation;
                                 
