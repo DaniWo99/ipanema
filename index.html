@@ -2,532 +2,538 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Garota de Ipanema - Letras Animadas</title>
-    <!-- Enlace a la fuente Montserrat desde Google Fonts para un estilo bold -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>A Garota de Ipanema - Experiencia Inmersiva</title>
+    <!-- Enlace a nuevas fuentes desde Google Fonts para un estilo más elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <!-- Estilos CSS integrados directamente en el HTML -->
+    <!-- Estilos CSS mejorados -->
     <style>
+        :root {
+            --glow-color: #ff69b4;
+        }
+
         /* Estilos generales para el cuerpo de la página */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif; /* Fuente bold para un mejor impacto visual */
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); /* Degradado romántico inicial */
-            color: #fff; /* Color de texto blanco */
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Altura mínima del 100% del viewport */
-            min-height: 100dvh; /* Mejora para móviles modernos */
-            overflow: hidden; /* Ocultar el desbordamiento */
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow: hidden;
             position: relative;
             text-align: center;
-            transition: background 1s ease-in-out; /* Transición suave para el cambio de fondo */
+            background-color: #121212; /* Fondo base oscuro */
         }
 
-        /* Clases para el cambio de color de fondo según el estado de ánimo */
-        .bg-sad {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); /* Tonos azules oscuros para tristeza */
-        }
-        .bg-beauty {
-            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%); /* Tonos dorados para belleza */
-        }
-        .bg-love {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); /* Tonos rosados para amor */
-            animation: pulse 2s infinite alternate; /* Animación de pulso para el amor */
-        }
-        .bg-grace {
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); /* Tonos celestes para gracia */
-        }
-        .bg-instrumental {
-            /* Fondo pastel rosado/azul claro para la sección instrumental */
-            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); 
-        }
-        .bg-neutral {
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); /* Fondo por defecto */
+        /* Pseudo-elemento para el fondo animado y los degradados */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+            z-index: -1;
+            transition: background 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease-in-out;
+            animation: background-pan 25s linear infinite alternate;
         }
 
-        /* Keyframes para la animación de pulso del fondo */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.02); }
+        @keyframes background-pan {
+            from { background-position: 0% 50%; }
+            to { background-position: 100% 50%; }
         }
 
-        /* Contenedor principal de la página */
+        /* Clases para el cambio de color de fondo (ahora aplicadas al pseudo-elemento) */
+        .bg-sad::before { background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); }
+        .bg-beauty::before { background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%); }
+        .bg-love::before { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); animation: pulse-bg 2s infinite alternate, background-pan 25s linear infinite alternate; }
+        .bg-grace::before { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .bg-instrumental::before { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+        .bg-neutral::before { background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); }
+
+        @keyframes pulse-bg {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        /* Contenedor principal con efecto "Glassmorphism" mejorado */
         .container {
-            background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente oscuro */
-            padding: 30px;
-            border-radius: 15px; /* Bordes redondeados */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
-            max-width: 90%; /* Ancho máximo del 90% del contenedor padre */
-            width: 600px; /* Ancho fijo para pantallas más grandes */
-            z-index: 1; /* Asegura que esté por encima del canvas de partículas y emojis */
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 90%;
+            width: 350px;
+            z-index: 10;
             position: relative;
-            backdrop-filter: blur(5px); /* Efecto de desenfoque detrás del contenedor */
-            -webkit-backdrop-filter: blur(5px); /* Compatibilidad con navegadores WebKit */
-            animation: container-glow 3s infinite alternate; /* Efecto de brillo en el contenedor */
+            transition: box-shadow 0.5s ease;
+            margin: 10px;
         }
 
-        /* Keyframes para el efecto de brillo del contenedor */
-        @keyframes container-glow {
-            0% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-            100% { box-shadow: 0 10px 40px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2); }
-        }
-
-        /* Estilos para el título de la canción */
+        /* Estilos para el título de la canción con nueva fuente y efecto */
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para legibilidad */
-            color: #ffe0b2; /* Color dorado suave */
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: normal;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+            line-height: 1.1;
+        }
+
+        /* Estilos para el texto "By: Dani" */
+        #author-credit {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            transition: opacity 0.5s ease-in-out;
+            position: relative;
+            z-index: 999;
         }
 
         /* Contenedor de las letras y traducciones */
         #lyrics-container {
-            min-height: 120px; /* Altura mínima para evitar saltos de diseño */
+            min-height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             position: relative;
-            cursor: pointer; /* Indica que es interactivo */
+            cursor: pointer;
         }
 
         /* Estilos para la letra principal (portugués) */
         .lyric {
-            font-size: 2.2em; /* Más grande y bold */
-            font-weight: 700; /* Asegura que sea bold */
-            opacity: 0; /* Inicialmente invisible */
-            transform: translateY(20px); /* Ligeramente desplazado hacia abajo */
-            animation: fadeInSlideUp 1s forwards; /* Animación de entrada por defecto */
-            transition: color 0.3s ease-in-out; /* Transición suave para cambios de color */
+            font-size: 1.8em;
+            font-weight: 600;
+            opacity: 0;
             margin: 0;
             padding: 5px 0;
-            line-height: 1.3;
-            /* Animación de pulso para la sombra del texto */
-            animation: text-shadow-pulse 1.5s infinite alternate; 
-        }
-
-        /* Keyframes para el pulso de la sombra del texto */
-        @keyframes text-shadow-pulse {
-            0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
-            100% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 25px rgba(255, 255, 255, 0.5); }
+            line-height: 1.2;
+            transition: color 0.5s ease-in-out, text-shadow 0.5s ease;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
         }
 
         /* Estilos para la traducción (español) */
         .translation {
-            font-size: 1em; /* Más pequeña */
-            color: #b0e0e6; /* Otro color para diferenciar */
+            font-size: 1em;
+            color: #e0e0e0;
             margin-top: 10px;
-            opacity: 0; /* Inicialmente invisible */
-            transform: translateY(10px); /* Ligeramente desplazado hacia abajo */
-            animation: fadeInSlideUp 1s forwards 0.3s; /* Animación con un ligero retraso */
+            opacity: 0;
+            font-weight: 400;
             transition: opacity 0.5s ease-in-out;
+            letter-spacing: 0.5px;
         }
 
-        /* Keyframes para diferentes animaciones de entrada de las letras */
-        @keyframes fadeInSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Nuevas animaciones de entrada de letras, más suaves */
+        @keyframes fadeIn-blur {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
-        @keyframes fadeInFromLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeInFromRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes rotateIn {
-            from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
-            to { opacity: 1; transform: rotate(0deg) scale(1); }
+        @keyframes fadeIn-char-by-char {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* Clases para aplicar las diferentes animaciones */
-        .animate-slide-up { animation: fadeInSlideUp 1s forwards; }
-        .animate-from-left { animation: fadeInFromLeft 1s forwards; }
-        .animate-from-right { animation: fadeInFromRight 1s forwards; }
-        .animate-zoom-in { animation: zoomIn 1s forwards; }
-        .animate-rotate-in { animation: rotateIn 1s forwards; }
+        .animate-lyric { animation: fadeIn-blur 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-translation { animation: fadeIn-blur 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards; }
 
-        /* Efectos de texto basados en la temática romántica y el contenido de la frase */
-        .effect-sad {
-            color: #d3d3d3; /* Gris claro para tristeza */
+        /* Efectos de texto basados en el mood */
+        .effect-sad { color: #a9c0de; }
+        .effect-beauty { color: #ffd700; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 15px #ffd700; }
+        .effect-grace { color: #a7e6ff; }
+        .effect-love { color: #ff8fab; text-shadow: 0 0 20px #ff8fab; }
+
+        /* Mejora de lectura para la traducción en fondo 'beauty' (amarillo) */
+        body.bg-beauty .translation {
+            color: #333; /* Color más oscuro para mejor contraste */
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* Sombra clara para resaltar */
         }
 
-        .effect-beauty {
-            color: #ffd700; /* Dorado para belleza */
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        /* Mejora de lectura para la traducción en fondo 'grace' (azul claro y rosado claro) */
+        body.bg-grace .translation {
+            color: #000; /* Color negro para mejor contraste */
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* Sombra clara para resaltar */
         }
 
-        .effect-grace {
-            color: #87cefa; /* Azul cielo para gracia */
-        }
-
-        .effect-love {
-            color: #ff69b4; /* Rosa fuerte para amor */
-            text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
-        }
-
-        /* Estilos para el canvas de partículas */
+        /* Canvas para partículas de clic */
         #particle-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Detrás del contenido principal y emojis */
+            z-index: 5;
+            pointer-events: none;
         }
 
-        /* Estilos para el botón de inicio - MEJORADO PARA MÓVILES */
-        #startButton {
-            background-color: #ff69b4; /* Rosa fuerte */
+        /* Botones rediseñados */
+        .action-button {
             color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.5em;
-            font-weight: 700;
+            padding: 12px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            
-            /* Centrado mejorado para móviles */
+            transition: all 0.3s ease;
+            z-index: 999;
+            background: linear-gradient(45deg, rgba(255,105,180,0.8), rgba(255,182,193,0.8));
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 20px var(--glow-color);
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        .action-button:hover, .action-button:active {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 30px var(--glow-color);
+            border-color: white;
+        }
+
+        #startButton {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 999; /* Por encima de todo */
-            
-            /* Dimensiones responsivas */
-            min-width: 200px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-            /* Mejoras para touch en móviles */
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        #startButton:hover, #startButton:active {
-            background-color: #ff4d94; /* Rosa más oscuro al tocar */
-            transform: translate(-50%, -50%) scale(1.05); /* Ligeramente más grande */
+        #replayButton {
+            margin-top: 15px;
+            --glow-color: #4CAF50;
+            background: linear-gradient(45deg, rgba(76,175,80,0.8), rgba(139,195,74,0.8));
         }
 
-        /* Estilos para el aviso de volumen */
+        /* Aviso de volumen */
         #volume-notice {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             color: #fff;
-            padding: 20px 30px;
+            padding: 15px 20px;
             border-radius: 15px;
-            font-size: 1.3em;
-            font-weight: 700;
-            text-align: center;
+            font-size: 1.1em;
             z-index: 998;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             opacity: 0;
             animation: fadeInOut 4s forwards;
+            max-width: 80%;
+            text-align: center;
         }
-
         @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            20%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Estilos para los emojis flotantes */
+        /* Emojis flotantes */
         .emoji-float {
             position: absolute;
-            font-size: 2em;
-            pointer-events: none; /* Ignorar eventos de ratón */
+            font-size: 1.8em;
+            pointer-events: none;
             opacity: 0;
-            /* Combinación de flotar y balancearse */
-            animation: floatAndSway 3s forwards; 
-            z-index: 0; /* Detrás del contenedor de letras */
+            animation: floatAndSway 6s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+            z-index: 1;
         }
 
-        /* Keyframes para el efecto de flotar y balancearse de los emojis */
+        /* Letras YERLY flotantes */
+        .yerly-letter {
+            position: absolute;
+            font-size: 3em;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatAndSway 6s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
         @keyframes floatAndSway {
-            0% { opacity: 0; transform: translate(var(--start-x), 0) scale(0.8); }
-            20% { opacity: 1; transform: translate(var(--mid-x), -20px) scale(1); }
-            80% { opacity: 1; transform: translate(var(--end-x), -80px) scale(1.1); }
-            100% { opacity: 0; transform: translate(var(--final-x), -100px) scale(1.2); }
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); }
+            25% { opacity: 1; transform: translateY(-50px) translateX(20px) scale(0.8) rotate(5deg); }
+            50% { opacity: 1; transform: translateY(-100px) translateX(-20px) scale(1) rotate(-5deg); }
+            75% { opacity: 1; transform: translateY(-150px) translateX(10px) scale(0.9) rotate(2deg); }
+            100% { opacity: 0; transform: translateY(-200px) translateX(0) scale(0.7); }
         }
         
-        /* Estilos para las estrellas fugaces (partículas de instrumental) */
+        /* Emojis y notas musicales flotantes durante la carga y la sección instrumental */
+        .preload-floater, .instrumental-floater {
+            position: absolute;
+            font-size: 2em;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatUpAndSway 8s ease-out forwards;
+            z-index: 1;
+        }
+        @keyframes floatUpAndSway {
+            0% { opacity: 0; transform: translateY(100vh) translateX(0) scale(0.6) rotate(0deg); }
+            20% { opacity: 1; transform: translateY(80vh) translateX(30px) scale(0.8) rotate(5deg); }
+            40% { opacity: 1; transform: translateY(60vh) translateX(-30px) scale(1) rotate(-5deg); }
+            60% { opacity: 1; transform: translateY(40vh) translateX(20px) scale(0.9) rotate(2deg); }
+            80% { opacity: 1; transform: translateY(20vh) translateX(-10px) scale(0.7) rotate(-3deg); }
+            100% { opacity: 0; transform: translateY(0) translateX(0) scale(0.5); }
+        }
+
+        /* Partículas de instrumental (estrellas fugaces) */
         .star-particle {
             position: absolute;
-            background-color: white;
-            border-radius: 50%;
+            background: linear-gradient(45deg, #fff, #a6c1ee, #fbc2eb);
             opacity: 0;
-            animation: shootingStar 2s forwards;
+            animation: shootingStar 2s ease-out forwards;
             pointer-events: none;
-            z-index: 0; /* Asegura que estén en el fondo */
+            z-index: 1;
         }
-
         @keyframes shootingStar {
-            0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            20% { opacity: 1; }
-            100% { opacity: 0; transform: translate(var(--end-x), var(--end-y)) scale(0.8); }
+            from { opacity: 1; transform: scale(1) rotate(45deg); }
+            to { opacity: 0; transform: scale(0) rotate(45deg) translateX(var(--travel-dist)); }
         }
 
-        /* Clase para ocultar el botón */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
-        /* Estilos para la barra de progreso */
+        /* Barra de progreso */
         #progress-bar-container {
             width: 80%;
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
             margin-top: 20px;
             overflow: hidden;
             position: relative;
-            display: none; /* Oculta por defecto */
+            display: none;
         }
-
         #progress-bar-fill {
             height: 100%;
             width: 0%;
-            background-color: #ff69b4; /* Rosa fuerte */
-            border-radius: 5px;
-            transition: width 0.1s linear; /* Transición suave para el progreso */
+            background: #4CAF50;
+            border-radius: 3px;
+            transition: width 0.1s linear;
         }
 
-        /* Animación para la barra de progreso durante la instrumental */
-        #progress-bar-fill.instrumental-pulse {
-            animation: pulse-progress 1.5s infinite alternate;
-        }
-
-        @keyframes pulse-progress {
-            0% { transform: scaleX(1); background-color: #ff69b4; }
-            100% { transform: scaleX(1.02); background-color: #ffd700; } /* Pulso y cambio de color */
-        }
-
-        /* Estilos para el botón de Replay */
-        #replayButton {
-            background-color: #4CAF50; /* Verde */
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.5em;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 20px;
-            z-index: 999;
-            display: none; /* Oculto por defecto */
-        }
-
-        #replayButton:hover, #replayButton:active {
-            background-color: #45a049;
-            transform: scale(1.05);
-        }
-
-
-        /* Media queries mejorados para iPhone y dispositivos móviles */
-        @media (max-width: 768px) {
-            body {
-                min-height: 100vh;
-                min-height: 100dvh; /* Altura dinámica del viewport para móviles modernos */
+        /* Media queries para responsividad móvil */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .container {
+                padding: 15px 20px;
+                width: 85%;
+                max-width: 320px;
+                margin: 5px;
             }
             
-            h1 {
-                font-size: 2em;
+            h1 { 
+                font-size: 2.5em; 
+                margin-bottom: 10px;
+                line-height: 1;
             }
-            .lyric {
-                font-size: 1.8em;
+            
+            #author-credit { 
+                font-size: 0.9em; 
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
-            .translation {
-                font-size: 0.9em;
+            
+            .lyric { 
+                font-size: 1.6em; 
+                line-height: 1.1;
+                padding: 3px 0;
             }
-            .container {
-                padding: 20px;
-                max-width: 95%;
+            
+            .translation { 
+                font-size: 0.95em; 
+                margin-top: 8px;
             }
-            #startButton {
-                padding: 12px 24px;
-                font-size: 1.3em;
-                min-height: 55px;
-                min-width: 180px;
-                /* Asegurar centrado perfecto en móviles */
-                position: fixed;
-                top: 50vh;
-                left: 50vw;
-                transform: translate(-50%, -50%);
+            
+            .action-button { 
+                font-size: 1.2em; 
+                padding: 10px 25px; 
             }
-            #volume-notice {
-                font-size: 1.1em;
-                padding: 15px 25px;
+            
+            #lyrics-container {
+                min-height: 100px;
             }
-            .emoji-float {
-                font-size: 1.5em;
-            }
-            #progress-bar-container {
-                width: 90%;
-            }
-            #replayButton {
-                padding: 12px 24px;
-                font-size: 1.3em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            .lyric {
-                font-size: 1.5em;
-            }
-            .translation {
-                font-size: 0.8em;
-            }
-            .container {
-                padding: 15px;
-                max-width: 95%;
-            }
-            #startButton {
-                font-size: 1.1em;
-                min-height: 50px;
-                min-width: 160px;
-                padding: 10px 20px;
-                /* Centrado específico para pantallas muy pequeñas */
-                position: fixed;
-                top: 50vh;
-                left: 50vw;
-                transform: translate(-50%, -50%);
-            }
+            
             #volume-notice {
                 font-size: 1em;
-                padding: 12px 20px;
+                padding: 12px 18px;
+                max-width: 85%;
             }
-            .emoji-float {
-                font-size: 1.2em;
-            }
-            #progress-bar-container {
-                width: 95%;
-            }
-            #replayButton {
-                font-size: 1.1em;
-                padding: 10px 20px;
+            
+            .emoji-float, .preload-floater, .instrumental-floater { 
+                font-size: 1.5em; 
             }
         }
 
-        /* Específico para iPhone */
-        @media only screen 
-        and (device-width : 375px) 
-        and (device-height : 667px)
-        and (-webkit-device-pixel-ratio : 2) {
-            #startButton {
-                position: fixed;
-                top: 50vh;
-                left: 50vw;
-                transform: translate(-50%, -50%);
+        /* Optimización específica para iPhone */
+        @media (max-width: 430px) and (orientation: portrait) {
+            .container {
+                width: 90%;
+                max-width: 300px;
+                padding: 12px 18px;
+            }
+            
+            h1 { 
+                font-size: 2.2em; 
+                margin-bottom: 8px;
+            }
+            
+            .lyric { 
+                font-size: 1.4em; 
+            }
+            
+            .translation { 
+                font-size: 0.9em; 
+                margin-top: 6px;
+            }
+            
+            #author-credit { 
+                font-size: 0.85em; 
+            }
+            
+            .action-button { 
+                font-size: 1.1em; 
+                padding: 9px 22px; 
+            }
+            
+            #lyrics-container {
+                min-height: 90px;
             }
         }
 
-        /* iPhone X y modelos similares */
-        @media only screen 
-        and (device-width : 375px) 
-        and (device-height : 812px)
-        and (-webkit-device-pixel-ratio : 3) {
-            body {
-                min-height: 100vh;
-                min-height: 100dvh;
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 375px) and (orientation: portrait) {
+            .container {
+                width: 92%;
             }
-            #startButton {
-                position: fixed;
-                top: 50vh;
-                left: 50vw;
-                transform: translate(-50%, -50%);
+            
+            h1 { 
+                font-size: 2em; 
+            }
+            
+            .lyric { 
+                font-size: 1.3em; 
+            }
+            
+            .translation { 
+                font-size: 0.85em; 
+            }
+            
+            .action-button { 
+                font-size: 1em; 
+                padding: 8px 20px; 
+            }
+            
+            .yerly-letter {
+                font-size: 2.5em; /* Tamaño reducido para pantallas pequeñas */
+            }
+        }
+
+        /* Ajustes para modo paisaje en móvil */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                padding: 10px 15px;
+                width: 70%;
+                max-width: 400px;
+            }
+            
+            h1 { 
+                font-size: 2em; 
+                margin-bottom: 5px;
+            }
+            
+            .lyric { 
+                font-size: 1.4em; 
+            }
+            
+            .translation { 
+                font-size: 0.9em; 
+                margin-top: 5px;
+            }
+            
+            #author-credit { 
+                font-size: 0.8em; 
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+            
+            #lyrics-container {
+                min-height: 70px;
+            }
+            
+            .yerly-letter {
+                font-size: 2.5em; /* Tamaño reducido para modo paisaje */
             }
         }
     </style>
 </head>
-<body>
+<body class="bg-neutral">
     <div class="container">
         <h1>A Garota de Ipanema</h1>
         <div id="lyrics-container">
-            <!-- Elemento para mostrar la letra actual en portugués -->
             <p id="current-lyric" class="lyric"></p>
-            <!-- Elemento para mostrar la traducción actual en español -->
             <p id="current-translation" class="translation"></p>
-            <!-- Barra de progreso para la sección instrumental -->
             <div id="progress-bar-container">
                 <div id="progress-bar-fill"></div>
             </div>
         </div>
     </div>
 
-    <!-- Botón para iniciar la canción y las animaciones -->
-    <button id="startButton">¡Comenzar!</button>
+    <button id="startButton" class="action-button">¡Comenzar!</button>
+    <button id="replayButton" class="action-button hidden">Reproducir de Nuevo</button>
 
-    <!-- Botón de Replay -->
-    <button id="replayButton" class="hidden">Reproducir de Nuevo</button>
+    <!-- Elemento para el texto "By: Dani" movido debajo de los botones -->
+    <p id="author-credit">By: Dani</p>
 
-    <!-- Aviso de volumen -->
     <div id="volume-notice" class="hidden">
         🔊 Sube el volumen para una mejor experiencia 🔊
     </div>
 
-    <!-- Elemento de audio para la canción -->
     <audio id="song">
-        <!-- Fuente de la canción -->
         <source src="https://cdn.jsdelivr.net/gh/DaniWo99/my-html-game/1987013732-290951723.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
-    <!-- Canvas para los efectos de partículas (se usa para las partículas de clic) -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Script JavaScript integrado directamente en el HTML -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Obtener referencias a los elementos HTML
+            // Referencias a elementos del DOM
             const body = document.body;
             const song = document.getElementById('song');
             const currentLyricElement = document.getElementById('current-lyric');
             const currentTranslationElement = document.getElementById('current-translation');
-            const lyricsContainer = document.getElementById('lyrics-container');
             const particleCanvas = document.getElementById('particle-canvas');
             const ctx = particleCanvas.getContext('2d');
             const startButton = document.getElementById('startButton');
             const volumeNotice = document.getElementById('volume-notice');
             const progressBarContainer = document.getElementById('progress-bar-container');
             const progressBarFill = document.getElementById('progress-bar-fill');
-            const replayButton = document.getElementById('replayButton'); // Nuevo botón de Replay
+            const replayButton = document.getElementById('replayButton');
+            const authorCredit = document.getElementById('author-credit'); // Nueva referencia
 
-            // Ajustar el tamaño del canvas de partículas al de la ventana
-            particleCanvas.width = window.innerWidth;
-            particleCanvas.height = window.innerHeight;
+            // Ajustar canvas al tamaño de la ventana
+            particleCanvas.width = window.innerWidth * window.devicePixelRatio;
+            particleCanvas.height = window.innerHeight * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
             window.addEventListener('resize', () => {
-                particleCanvas.width = window.innerWidth;
-                particleCanvas.height = window.innerHeight;
+                particleCanvas.width = window.innerWidth * window.devicePixelRatio;
+                particleCanvas.height = window.innerHeight * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
             });
 
-            // Datos de las letras, traducciones y estado de ánimo (mood)
+            // Datos de las letras (sin cambios en la funcionalidad)
             const lyricsData = [
                 { time: 41.04, text: "Ah, por que estou tão sozinho?", translation: "Ah, ¿por qué estoy tan solo?", mood: "sad" },
                 { time: 47.86, text: "Ah, por que tudo é tão triste?", translation: "Ah, ¿por qué todo es tan triste?", mood: "sad" },
@@ -536,7 +542,7 @@
                 { time: 64.10, text: "Que também passa sozinha", translation: "Que también pasa sola", mood: "sad" },
                 { time: 68.10, text: "Ah, se ela soubesse que quando ela passa", translation: "Ah, si ella supiera que cuando ella pasa", mood: "love" },
                 { time: 71.86, text: "O mundo inteirinho se enche de graça", translation: "El mundo entero se llena de gracia", mood: "grace" },
-                { time: 75.40, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa del amor", mood: "love" },
+                { time: 75.40, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa do amor", mood: "love" },
                 { time: 80.58, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 83.80, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 87.20, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
@@ -546,364 +552,265 @@
                 { time: 189.30, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 191.28, text: "Ah, se ela soubesse que quando ela passa", translation: "Ah, si ella supiera que cuando ella pasa", mood: "love" },
                 { time: 195.58, text: "O mundo inteirinho se enche de graça", translation: "El mundo entero se llena de gracia", mood: "grace" },
-                { time: 199.06, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa do amor", mood: "love" },
+                { time: 199.06, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa del amor", mood: "love" },
                 { time: 204.40, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 208.04, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 227.28, text: "Ipanema", translation: "Ipanema", mood: "beauty" }
             ];
-
-            let currentLyricIndex = 0;
-            const initialDelay = 5; // La canción debe empezar 5 segundos antes de la primera letra cantada.
-
-            // Definir los tiempos de inicio y fin de la sección instrumental
+            
+            const initialDelay = 5;
             const instrumentalStartTime = 84.00; 
             const instrumentalEndTime = 177.10;
-            let isInInstrumentalSection = false; // Bandera para controlar el estado instrumental
+            let isInInstrumentalSection = false;
+            let instrumentalFloaterInterval;
 
-            // Array de clases de animación para las letras
-            const animationClasses = [
-                'animate-slide-up',
-                'animate-from-left',
-                'animate-from-right',
-                'animate-zoom-in',
-                'animate-rotate-in'
-            ];
+            // Variables para el efecto YERLY
+            const yerlyLetters = ['Y', 'E', 'R', 'L', 'Y'];
+            let currentYerlyIndex = 0;
+            const yerlyColors = ['#ff1744', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0', '#e91e63', '#00bcd4', '#8bc34a', '#ffc107']; 
 
-            // Clase para representar una partícula en el canvas
+            // Partículas de clic mejoradas (chispas)
+            let particles = [];
             class Particle {
-                constructor(x, y, color, size, velocity) {
+                constructor(x, y) {
                     this.x = x;
                     this.y = y;
-                    this.color = color;
-                    this.size = size;
-                    this.velocity = velocity;
-                    this.alpha = 1; // Opacidad inicial
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 4 + 1;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.size = Math.random() * 3 + 1;
+                    this.alpha = 1;
+                    this.gravity = 0.05;
+                    this.color = `hsl(${Math.random() * 60 + 300}, 100%, ${Math.random() * 50 + 50}%)`; // Tonos rosa/púrpura
                 }
-
-                // Dibujar la partícula en el canvas
-                draw() {
-                    ctx.save(); // Guardar el estado del contexto
-                    ctx.globalAlpha = this.alpha; // Aplicar la opacidad
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); // Dibujar un círculo
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                    ctx.restore(); // Restaurar el estado del contexto
-                }
-
-                // Actualizar la posición y opacidad de la partícula
                 update() {
-                    this.x += this.velocity.x;
-                    this.y += this.velocity.y;
-                    this.alpha -= 0.01; // Reducir la opacidad gradualmente
-                    this.size *= 0.98; // Reducir el tamaño gradualmente
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += this.gravity;
+                    this.alpha -= 0.02;
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
                 }
             }
 
-            let particles = []; // Array para almacenar todas las partículas activas
-
-            // Función para crear nuevas partículas (para el efecto de clic)
-            function createParticles(x, y, count, color) {
-                for (let i = 0; i < count; i++) {
-                    const angle = Math.random() * Math.PI * 2; // Ángulo aleatorio
-                    const speed = Math.random() * 2 + 1; // Velocidad aleatoria
-                    const velocity = {
-                        x: Math.cos(angle) * speed,
-                        y: Math.sin(angle) * speed
-                    };
-                    const size = Math.random() * 5 + 2; // Tamaño aleatorio
-                    particles.push(new Particle(x, y, color, size, velocity));
+            function createParticles(x, y) {
+                for (let i = 0; i < 40; i++) {
+                    particles.push(new Particle(x, y));
                 }
             }
 
-            // Bucle de animación para las partículas de clic
             function animateParticles() {
-                ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height); // Limpiar el canvas
+                ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
                 for (let i = particles.length - 1; i >= 0; i--) {
-                    particles[i].update(); // Actualizar la partícula
-                    particles[i].draw(); // Dibujar la partícula
-                    // Eliminar partículas que se han desvanecido o son muy pequeñas
-                    if (particles[i].alpha <= 0.05 || particles[i].size <= 0.5) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0) {
                         particles.splice(i, 1);
                     }
                 }
-                requestAnimationFrame(animateParticles); // Solicitar el siguiente frame de animación
+                requestAnimationFrame(animateParticles);
             }
+            animateParticles();
 
-            animateParticles(); // Iniciar el bucle de animación de partículas
-
-            // Función para crear y animar emojis flotantes
+            // Función para crear letra YERLY flotante
+            function createYerlyLetter(x, y) {
+                const letter = yerlyLetters[currentYerlyIndex];
+                const randomColor = yerlyColors[Math.floor(Math.random() * yerlyColors.length)];
+                
+                const letterElement = document.createElement('span');
+                letterElement.textContent = letter;
+                letterElement.classList.add('yerly-letter');
+                letterElement.style.left = `${x}px`;
+                letterElement.style.top = `${y}px`;
+                letterElement.style.color = randomColor;
+                letterElement.style.animationDelay = '0s'; // Sin delay para aparecer inmediatamente
+                
+                body.appendChild(letterElement);
+                letterElement.addEventListener('animationend', () => letterElement.remove());
+                
+                // Avanzar al siguiente índice, volviendo al inicio si es necesario
+                currentYerlyIndex = (currentYerlyIndex + 1) % yerlyLetters.length;
+            }
+            // Función para crear emojis con más cantidad y efecto de balanceo
             function createEmoji(emoji, numEmojis) {
                 for (let i = 0; i < numEmojis; i++) {
                     const emojiElement = document.createElement('span');
                     emojiElement.textContent = emoji;
                     emojiElement.classList.add('emoji-float');
-                    
-                    // Posicionar el emoji de forma aleatoria en toda la ventana
-                    const randomX = Math.random() * window.innerWidth;
-                    const randomY = Math.random() * window.innerHeight;
-                    
-                    emojiElement.style.left = `${randomX}px`;
-                    emojiElement.style.top = `${randomY}px`;
-
-                    // Variables CSS para el balanceo independiente
-                    const startX = (Math.random() - 0.5) * 20; // Pequeño desplazamiento horizontal inicial
-                    const midX = (Math.random() - 0.5) * 40;  // Desplazamiento horizontal más pronunciado
-                    const endX = (Math.random() - 0.5) * 20;  // Desplazamiento horizontal final
-                    const finalX = (Math.random() - 0.5) * 10; // Desplazamiento horizontal al final de la animación
-
-                    emojiElement.style.setProperty('--start-x', `${startX}px`);
-                    emojiElement.style.setProperty('--mid-x', `${midX}px`);
-                    emojiElement.style.setProperty('--end-x', `${endX}px`);
-                    emojiElement.style.setProperty('--final-x', `${finalX}px`);
-                    
-                    body.appendChild(emojiElement); // Añadir al body para que esté en el fondo
-
-                    // Eliminar el emoji después de su animación
-                    emojiElement.addEventListener('animationend', () => {
-                        emojiElement.remove();
-                    });
+                    emojiElement.style.left = `${Math.random() * 100}vw`;
+                    emojiElement.style.top = `${Math.random() * 100}vh`;
+                    emojiElement.style.animationDelay = `${Math.random() * 3}s`; // Aumentado el delay para más variedad
+                    body.appendChild(emojiElement);
+                    emojiElement.addEventListener('animationend', () => emojiElement.remove());
                 }
             }
 
-            // Función para crear y animar estrellas y corazones (para la sección instrumental)
-            function createInstrumentalParticle() {
-                const particleElement = document.createElement('div');
-                particleElement.classList.add('star-particle'); // Clase base para animación
-
-                const particleType = Math.random() < 0.7 ? 'star' : 'heart'; // 70% estrellas, 30% corazones
-
-                if (particleType === 'star') {
-                    const size = Math.random() * 3 + 1;
-                    particleElement.style.width = `${size}px`;
-                    particleElement.style.height = `${size}px`;
-                    particleElement.style.backgroundColor = 'white';
-                    particleElement.style.borderRadius = '50%';
-                } else { // heart
-                    particleElement.textContent = '💖'; // Pequeño corazón brillante
-                    particleElement.style.fontSize = `${Math.random() * 1.2 + 0.8}em`; // Tamaño de los corazones
-                    particleElement.style.backgroundColor = 'transparent'; // Asegurar que no tenga fondo de círculo
+            // Función para crear elementos flotantes (notas musicales y corazones)
+            function createFloater(content, type, className) {
+                const heartColors = ['❤️', '🧡', '💛', '💚', '💙', '💜'];
+                const element = document.createElement('span');
+                if (type === 'heart') {
+                    element.textContent = heartColors[Math.floor(Math.random() * heartColors.length)];
+                } else {
+                    element.textContent = content;
                 }
-
-                // Posición inicial aleatoria en la parte superior izquierda
-                const startX = Math.random() * window.innerWidth * 0.2; // 0-20% del ancho
-                const startY = Math.random() * window.innerHeight * 0.2; // 0-20% del alto
-                particleElement.style.left = `${startX}px`;
-                particleElement.style.top = `${startY}px`;
-
-                // Posición final aleatoria en la parte inferior derecha
-                const endX = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.2; // 20-100% del ancho
-                const endY = Math.random() * window.innerHeight * 0.8 + window.innerHeight * 0.2; // 20-100% del alto
-                
-                particleElement.style.setProperty('--end-x', `${endX - startX}px`);
-                particleElement.style.setProperty('--end-y', `${endY - startY}px`);
-
-                particleElement.style.animationDuration = `${Math.random() * 2 + 1.5}s`; // Duración aleatoria
-                particleElement.style.animationDelay = `${Math.random() * 0.5}s`; // Retraso aleatorio
-
-                body.appendChild(particleElement);
-
-                particleElement.addEventListener('animationend', () => {
-                    particleElement.remove();
-                });
+                element.classList.add(className); // Usa la clase pasada como argumento
+                element.style.left = `${Math.random() * 100}vw`;
+                element.style.animationDelay = `${Math.random() * 5}s`; 
+                body.appendChild(element);
+                element.addEventListener('animationend', () => element.remove());
             }
 
-            let starInterval; // Variable para almacenar el intervalo de estrellas
+            // Función para generar flotadores instrumentales
+            function generateInstrumentalFloaters() {
+                createFloater('🎵', 'note', 'instrumental-floater');
+                createFloater('🎶', 'note', 'instrumental-floater');
+                if (Math.random() < 0.5) { // 50% de probabilidad de crear un corazón
+                    createFloater('', 'heart', 'instrumental-floater');
+                }
+            }
 
-            // Función para el fade-in del audio
+            // Funciones de control de audio y UI (sin cambios en lógica)
             function fadeInAudio() {
-                song.volume = 0; // Empezar con volumen 0
-                const fadeDuration = 3000; // Duración del fade-in en milisegundos (3 segundos)
-                const fadeInterval = 50; // Intervalo de actualización en milisegundos
+                song.volume = 0;
                 let currentVolume = 0;
-
-                const fadeStep = () => {
-                    currentVolume += (1 / (fadeDuration / fadeInterval));
+                const fadeInterval = setInterval(() => {
+                    currentVolume += 0.05;
                     if (currentVolume >= 1) {
                         song.volume = 1;
-                        clearInterval(fadeIntervalId); // Detener el fade-in
+                        clearInterval(fadeInterval);
                     } else {
                         song.volume = currentVolume;
                     }
-                };
-
-                const fadeIntervalId = setInterval(fadeStep, fadeInterval);
+                }, 100);
             }
 
-            // Función para mostrar el aviso de volumen
             function showVolumeNotice() {
                 volumeNotice.classList.remove('hidden');
-                // Ocultar automáticamente después de 4 segundos
-                setTimeout(() => {
-                    volumeNotice.classList.add('hidden');
-                }, 4000);
+                setTimeout(() => volumeNotice.classList.add('hidden'), 4000);
             }
 
-            // Función para iniciar la reproducción de la canción y las animaciones
             function startSongAndAnimations() {
-                startButton.classList.add('hidden'); // Ocultar el botón de inicio
-                replayButton.classList.add('hidden'); // Asegurarse de que el botón de replay esté oculto
-                showVolumeNotice(); // Mostrar aviso de volumen
-                song.currentTime = lyricsData[0].time - initialDelay; // Ajustar el tiempo de inicio
-                song.play().then(() => {
-                    fadeInAudio(); // Iniciar el fade-in del audio
-                }).catch(error => {
-                    console.error("Error al intentar reproducir la canción:", error);
-                    alert("No se pudo reproducir la canción. Asegúrate de que el enlace de audio sea accesible y no tenga restricciones.");
-                });
+                startButton.classList.add('hidden');
+                replayButton.classList.add('hidden');
+                authorCredit.classList.add('hidden'); // Oculta el texto "By: Dani"
+                showVolumeNotice();
+                song.currentTime = lyricsData[0].time - initialDelay;
+                song.play().then(fadeInAudio).catch(console.error);
             }
 
-            // Evento click en el botón de inicio
             startButton.addEventListener('click', startSongAndAnimations);
-
-            // Evento click en el botón de Replay
             replayButton.addEventListener('click', () => {
-                song.currentTime = 0; // Reiniciar la canción
+                song.currentTime = 0;
                 song.play();
-                replayButton.classList.add('hidden'); // Ocultar el botón de replay
-                // Opcional: reiniciar también el estado visual al inicio de la canción
+                replayButton.classList.add('hidden');
                 body.className = 'bg-neutral';
                 currentLyricElement.textContent = '';
                 currentTranslationElement.textContent = '';
-                progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
-                progressBarFill.style.width = '0%';
-                progressBarFill.classList.remove('instrumental-pulse');
+                progressBarContainer.style.display = 'none';
+                authorCredit.classList.remove('hidden'); // Muestra el texto "By: Dani" de nuevo al reiniciar
             });
 
-
-            // Evento que se dispara cuando el tiempo de reproducción del audio cambia
+            // Evento `timeupdate` para sincronizar todo
             song.addEventListener('timeupdate', () => {
                 const currentTime = song.currentTime;
                 const duration = song.duration;
 
-                // Lógica para la sección instrumental
+                // Sección instrumental
                 if (currentTime >= instrumentalStartTime && currentTime < instrumentalEndTime) {
                     if (!isInInstrumentalSection) {
                         isInInstrumentalSection = true;
-                        currentLyricElement.textContent = ''; // Ocultar letra
-                        currentTranslationElement.textContent = ''; // Ocultar traducción
-                        body.className = 'bg-instrumental'; // Cambiar fondo a instrumental
-                        // Mostrar y animar la barra de progreso
+                        currentLyricElement.textContent = '';
+                        currentTranslationElement.textContent = '';
+                        body.className = 'bg-instrumental';
                         progressBarContainer.style.display = 'block';
-                        progressBarFill.classList.add('instrumental-pulse');
-
-                        // Iniciar la generación de estrellas y corazones fugaces
-                        starInterval = setInterval(createInstrumentalParticle, 300); // Cada 300ms
+                        // Iniciar el intervalo para notas musicales y corazones
+                        instrumentalFloaterInterval = setInterval(generateInstrumentalFloaters, 300); // Genera cada 300ms
                     }
-                    // Actualizar el progreso de la barra durante la instrumental
                     const instrumentalDuration = instrumentalEndTime - instrumentalStartTime;
-                    const progressInInstrumental = currentTime - instrumentalStartTime;
-                    const progressPercentage = (progressInInstrumental / instrumentalDuration) * 100;
-                    progressBarFill.style.width = `${progressPercentage}%`;
-
+                    const progress = (currentTime - instrumentalStartTime) / instrumentalDuration * 100;
+                    progressBarFill.style.width = `${progress}%`;
                 } else {
                     if (isInInstrumentalSection) {
                         isInInstrumentalSection = false;
-                        clearInterval(starInterval); // Detener la generación de partículas
-                        progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
-                        progressBarFill.classList.remove('instrumental-pulse');
-                        // Eliminar partículas existentes si es necesario (se eliminan solas al terminar animación)
+                        clearInterval(instrumentalFloaterInterval); // Detener el intervalo al salir de la sección
+                        progressBarContainer.style.display = 'none';
                     }
 
-                    // Mostrar la letra y traducción correcta según el tiempo actual de la canción
+                    // Lógica para mostrar letras
                     let foundLyric = false;
                     for (let i = 0; i < lyricsData.length; i++) {
                         const lyric = lyricsData[i];
                         const nextLyricTime = (i + 1 < lyricsData.length) ? lyricsData[i + 1].time : Infinity;
-
-                        // Si el tiempo actual está dentro del rango de esta letra
                         if (currentTime >= lyric.time && currentTime < nextLyricTime) {
-                            if (currentLyricElement.textContent !== lyric.text) { // Solo actualizar si la letra es diferente
-                                console.log(`Showing lyric at ${currentTime}: ${lyric.text}`); // Debug
+                            if (currentLyricElement.textContent !== lyric.text) {
+                                // Aplicar animaciones
+                                currentLyricElement.className = 'lyric';
+                                currentTranslationElement.className = 'translation';
+                                void currentLyricElement.offsetWidth; // Forzar reflow
+                                
                                 currentLyricElement.textContent = lyric.text;
                                 currentTranslationElement.textContent = lyric.translation;
                                 
-                                // Resetear clases de animación y fondo
-                                currentLyricElement.className = 'lyric';
-                                currentTranslationElement.className = 'translation';
-                                body.className = ''; 
+                                body.className = `bg-${lyric.mood}`;
+                                currentLyricElement.classList.add(`effect-${lyric.mood}`);
+                                currentLyricElement.classList.add('animate-lyric');
+                                currentTranslationElement.classList.add('animate-translation');
 
-                                // Aplicar efectos de texto, fondo y emojis según el estado de ánimo
+                                // Crear emojis según el mood con más cantidad
                                 switch (lyric.mood) {
-                                    case 'sad':
-                                        currentLyricElement.classList.add('effect-sad');
-                                        body.classList.add('bg-sad');
-                                        createEmoji('🥀', 8); // Rosa marchita
-                                        break;
-                                    case 'beauty':
-                                        currentLyricElement.classList.add('effect-beauty');
-                                        body.classList.add('bg-beauty');
-                                        createEmoji('✨', 12); 
-                                        createEmoji('🌸', 8); 
-                                        break;
-                                    case 'love':
-                                        currentLyricElement.classList.add('effect-love');
-                                        body.classList.add('bg-love');
-                                        createEmoji('❤️', 15); 
-                                        createEmoji('💖', 10); 
-                                        break;
-                                    case 'grace':
-                                        currentLyricElement.classList.add('effect-grace');
-                                        body.classList.add('bg-grace');
-                                        createEmoji('🕊️', 8); 
-                                        break;
-                                    default:
-                                        body.classList.add('bg-neutral');
-                                        break;
+                                    case 'sad': createEmoji('🥀', 15); break; 
+                                    case 'beauty': createEmoji('✨', 20); createEmoji('🌸', 15); break; 
+                                    case 'love': createEmoji('❤️', 25); createEmoji('💖', 20); break; 
+                                    case 'grace': createEmoji('🕊️', 15); break; 
                                 }
-
-                                // Aplicar animación de entrada aleatoria
-                                const randomAnimationClass = animationClasses[Math.floor(Math.random() * animationClasses.length)];
-                                currentLyricElement.classList.add(randomAnimationClass);
-                                currentTranslationElement.classList.add('animate-slide-up');
-
-                                // Forzar reinicio de animación
-                                currentLyricElement.style.animation = 'none';
-                                currentLyricElement.offsetHeight; 
-                                currentLyricElement.style.animation = null; 
-
-                                currentTranslationElement.style.animation = 'none';
-                                currentTranslationElement.offsetHeight; 
-                                currentTranslationElement.style.animation = null; 
                             }
-                            currentLyricIndex = i; // Actualizar el índice de la letra actual
                             foundLyric = true;
-                            break; // Salir del bucle una vez que se encuentra la letra correcta
+                            break;
                         }
                     }
-                    // Si no se encontró ninguna letra en el rango, significa que estamos entre letras o al final
-                    if (!foundLyric && currentLyricElement.textContent !== '') {
+                    if (!foundLyric && currentLyricElement.textContent) {
                         currentLyricElement.textContent = '';
                         currentTranslationElement.textContent = '';
-                        body.className = 'bg-neutral'; // Volver al fondo neutral si no hay letra activa
+                        body.className = 'bg-neutral';
                     }
                 }
 
-                // Mostrar el botón de Replay cuando la canción termina
-                if (currentTime >= duration && duration > 0) { // duration > 0 para asegurar que la metadata ya ha sido cargada
+                // Fin de la canción
+                if (currentTime >= duration && duration > 0) {
                     replayButton.classList.remove('hidden');
-                    currentLyricElement.textContent = ''; // Limpiar letras al final
+                    currentLyricElement.textContent = '';
                     currentTranslationElement.textContent = '';
-                    body.className = 'bg-neutral'; // Fondo neutral al final
-                    progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
+                    body.className = 'bg-neutral';
+                    progressBarContainer.style.display = 'none';
+                    authorCredit.classList.remove('hidden'); // Muestra el texto "By: Dani" al finalizar la canción
                 }
             });
 
-            // Efecto de partículas al hacer clic en toda la pantalla
+            // Efecto de partículas y letra YERLY al hacer clic
             document.addEventListener('click', (e) => {
-                // Solo aplicar el efecto si no es el botón de inicio o el botón de Replay
-                if (e.target !== startButton && e.target !== replayButton) {
-                    // Usar las coordenadas del clic directamente
-                    const x = e.clientX;
-                    const y = e.clientY;
-
-                    // Colores de partículas con temática romántica
-                    const colors = ['#FFC0CB', '#FF69B4', '#EE82EE', '#ADFF2F']; // Rosa claro, rosa fuerte, violeta, verde claro
-                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                    // Crear partículas en la posición del clic
-                    createParticles(x, y, 30, randomColor);
-                }
+                if (e.target.closest('.action-button')) return;
+                
+                // Crear partículas (fuegos artificiales)
+                createParticles(e.clientX, e.clientY);
+                
+                // Crear letra YERLY flotante
+                createYerlyLetter(e.clientX, e.clientY);
             });
+
+            // Llamar a la función para crear elementos flotantes de precarga al cargar la página
+            createFloater('🎵', 'note', 'preload-floater');
+            createFloater('🎶', 'note', 'preload-floater');
+            createFloater('', 'heart', 'preload-floater');
+            createFloater('', 'heart', 'preload-floater'); 
         });
     </script>
 </body>
