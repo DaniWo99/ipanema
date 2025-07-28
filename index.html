@@ -294,6 +294,59 @@
             display: none !important;
         }
 
+        /* Estilos para la barra de progreso */
+        #progress-bar-container {
+            width: 80%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+            display: none; /* Oculta por defecto */
+        }
+
+        #progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #ff69b4; /* Rosa fuerte */
+            border-radius: 5px;
+            transition: width 0.1s linear; /* Transición suave para el progreso */
+        }
+
+        /* Animación para la barra de progreso durante la instrumental */
+        #progress-bar-fill.instrumental-pulse {
+            animation: pulse-progress 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-progress {
+            0% { transform: scaleX(1); background-color: #ff69b4; }
+            100% { transform: scaleX(1.02); background-color: #ffd700; } /* Pulso y cambio de color */
+        }
+
+        /* Estilos para el botón de Replay */
+        #replayButton {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            z-index: 999;
+            display: none; /* Oculto por defecto */
+        }
+
+        #replayButton:hover, #replayButton:active {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+
         /* Media queries mejorados para iPhone y dispositivos móviles */
         @media (max-width: 768px) {
             body {
@@ -332,6 +385,13 @@
             .emoji-float {
                 font-size: 1.5em;
             }
+            #progress-bar-container {
+                width: 90%;
+            }
+            #replayButton {
+                padding: 12px 24px;
+                font-size: 1.3em;
+            }
         }
 
         @media (max-width: 480px) {
@@ -365,6 +425,13 @@
             }
             .emoji-float {
                 font-size: 1.2em;
+            }
+            #progress-bar-container {
+                width: 95%;
+            }
+            #replayButton {
+                font-size: 1.1em;
+                padding: 10px 20px;
             }
         }
 
@@ -407,11 +474,18 @@
             <p id="current-lyric" class="lyric"></p>
             <!-- Elemento para mostrar la traducción actual en español -->
             <p id="current-translation" class="translation"></p>
+            <!-- Barra de progreso para la sección instrumental -->
+            <div id="progress-bar-container">
+                <div id="progress-bar-fill"></div>
+            </div>
         </div>
     </div>
 
     <!-- Botón para iniciar la canción y las animaciones -->
     <button id="startButton">¡Comenzar!</button>
+
+    <!-- Botón de Replay -->
+    <button id="replayButton" class="hidden">Reproducir de Nuevo</button>
 
     <!-- Aviso de volumen -->
     <div id="volume-notice" class="hidden">
@@ -441,6 +515,9 @@
             const ctx = particleCanvas.getContext('2d');
             const startButton = document.getElementById('startButton');
             const volumeNotice = document.getElementById('volume-notice');
+            const progressBarContainer = document.getElementById('progress-bar-container');
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            const replayButton = document.getElementById('replayButton'); // Nuevo botón de Replay
 
             // Ajustar el tamaño del canvas de partículas al de la ventana
             particleCanvas.width = window.innerWidth;
@@ -665,6 +742,7 @@
             // Función para iniciar la reproducción de la canción y las animaciones
             function startSongAndAnimations() {
                 startButton.classList.add('hidden'); // Ocultar el botón de inicio
+                replayButton.classList.add('hidden'); // Asegurarse de que el botón de replay esté oculto
                 showVolumeNotice(); // Mostrar aviso de volumen
                 song.currentTime = lyricsData[0].time - initialDelay; // Ajustar el tiempo de inicio
                 song.play().then(() => {
@@ -678,9 +756,25 @@
             // Evento click en el botón de inicio
             startButton.addEventListener('click', startSongAndAnimations);
 
+            // Evento click en el botón de Replay
+            replayButton.addEventListener('click', () => {
+                song.currentTime = 0; // Reiniciar la canción
+                song.play();
+                replayButton.classList.add('hidden'); // Ocultar el botón de replay
+                // Opcional: reiniciar también el estado visual al inicio de la canción
+                body.className = 'bg-neutral';
+                currentLyricElement.textContent = '';
+                currentTranslationElement.textContent = '';
+                progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
+                progressBarFill.style.width = '0%';
+                progressBarFill.classList.remove('instrumental-pulse');
+            });
+
+
             // Evento que se dispara cuando el tiempo de reproducción del audio cambia
             song.addEventListener('timeupdate', () => {
                 const currentTime = song.currentTime;
+                const duration = song.duration;
 
                 // Lógica para la sección instrumental
                 if (currentTime >= instrumentalStartTime && currentTime < instrumentalEndTime) {
@@ -689,18 +783,29 @@
                         currentLyricElement.textContent = ''; // Ocultar letra
                         currentTranslationElement.textContent = ''; // Ocultar traducción
                         body.className = 'bg-instrumental'; // Cambiar fondo a instrumental
+                        // Mostrar y animar la barra de progreso
+                        progressBarContainer.style.display = 'block';
+                        progressBarFill.classList.add('instrumental-pulse');
+
                         // Iniciar la generación de estrellas y corazones fugaces
                         starInterval = setInterval(createInstrumentalParticle, 300); // Cada 300ms
                     }
+                    // Actualizar el progreso de la barra durante la instrumental
+                    const instrumentalDuration = instrumentalEndTime - instrumentalStartTime;
+                    const progressInInstrumental = currentTime - instrumentalStartTime;
+                    const progressPercentage = (progressInInstrumental / instrumentalDuration) * 100;
+                    progressBarFill.style.width = `${progressPercentage}%`;
+
                 } else {
                     if (isInInstrumentalSection) {
                         isInInstrumentalSection = false;
                         clearInterval(starInterval); // Detener la generación de partículas
+                        progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
+                        progressBarFill.classList.remove('instrumental-pulse');
                         // Eliminar partículas existentes si es necesario (se eliminan solas al terminar animación)
                     }
 
                     // Mostrar la letra y traducción correcta según el tiempo actual de la canción
-                    // Iterar sobre las letras para encontrar la correcta
                     let foundLyric = false;
                     for (let i = 0; i < lyricsData.length; i++) {
                         const lyric = lyricsData[i];
@@ -773,12 +878,21 @@
                         body.className = 'bg-neutral'; // Volver al fondo neutral si no hay letra activa
                     }
                 }
+
+                // Mostrar el botón de Replay cuando la canción termina
+                if (currentTime >= duration && duration > 0) { // duration > 0 para asegurar que la metadata ya ha sido cargada
+                    replayButton.classList.remove('hidden');
+                    currentLyricElement.textContent = ''; // Limpiar letras al final
+                    currentTranslationElement.textContent = '';
+                    body.className = 'bg-neutral'; // Fondo neutral al final
+                    progressBarContainer.style.display = 'none'; // Ocultar barra de progreso
+                }
             });
 
             // Efecto de partículas al hacer clic en toda la pantalla
             document.addEventListener('click', (e) => {
-                // Solo aplicar el efecto si no es el botón de inicio
-                if (e.target !== startButton) {
+                // Solo aplicar el efecto si no es el botón de inicio o el botón de Replay
+                if (e.target !== startButton && e.target !== replayButton) {
                     // Usar las coordenadas del clic directamente
                     const x = e.clientX;
                     const y = e.clientY;
