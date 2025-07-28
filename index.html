@@ -214,6 +214,34 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        /* Cuenta regresiva */
+        #countdown {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Poppins', sans-serif;
+            font-size: 6em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 105, 180, 0.6);
+            z-index: 1000;
+            opacity: 0;
+            animation: countdownPulse 1s ease-in-out;
+        }
+
+        @keyframes countdownPulse {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes fadeInButton {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
         #replayButton {
@@ -380,6 +408,10 @@
             .emoji-float, .preload-floater, .instrumental-floater { 
                 font-size: 1.5em; 
             }
+
+            #countdown {
+                font-size: 4em;
+            }
         }
 
         /* Optimización específica para iPhone */
@@ -416,6 +448,10 @@
             #lyrics-container {
                 min-height: 90px;
             }
+
+            #countdown {
+                font-size: 3.5em;
+            }
         }
 
         /* Para pantallas muy pequeñas */
@@ -443,6 +479,10 @@
             
             .yerly-letter {
                 font-size: 2.5em; /* Tamaño reducido para pantallas pequeñas */
+            }
+
+            #countdown {
+                font-size: 3em;
             }
         }
 
@@ -496,8 +536,11 @@
         </div>
     </div>
 
-    <button id="startButton" class="action-button">¡Comenzar!</button>
+    <button id="startButton" class="action-button hidden">¡Comenzar!</button>
     <button id="replayButton" class="action-button hidden">Reproducir de Nuevo</button>
+
+    <!-- Cuenta regresiva -->
+    <div id="countdown" class="hidden"></div>
 
     <!-- Elemento para el texto "By: Dani" movido debajo de los botones -->
     <p id="author-credit">By: Dani</p>
@@ -528,6 +571,7 @@
             const progressBarFill = document.getElementById('progress-bar-fill');
             const replayButton = document.getElementById('replayButton');
             const authorCredit = document.getElementById('author-credit'); // Nueva referencia
+            const countdown = document.getElementById('countdown'); // Referencia a la cuenta regresiva
 
             // Ajustar canvas al tamaño de la ventana
             particleCanvas.width = window.innerWidth * window.devicePixelRatio;
@@ -548,7 +592,7 @@
                 { time: 64.10, text: "Que também passa sozinha", translation: "Que también pasa sola", mood: "sad" },
                 { time: 68.10, text: "Ah, se ela soubesse que quando ela passa", translation: "Ah, si ella supiera que cuando ella pasa", mood: "love" },
                 { time: 71.86, text: "O mundo inteirinho se enche de graça", translation: "El mundo entero se llena de gracia", mood: "grace" },
-                { time: 75.40, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa do amor", mood: "love" },
+                { time: 75.40, text: "E fica mais lindo por causa do amor", translation: "Y se vuelve más hermoso por causa del amor", mood: "love" },
                 { time: 80.58, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 83.80, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
                 { time: 87.20, text: "Por causa do amor", translation: "Por causa del amor", mood: "love" },
@@ -573,7 +617,34 @@
             // Variables para el efecto YERLY
             const yerlyLetters = ['Y', 'E', 'R', 'L', 'Y'];
             let currentYerlyIndex = 0;
-            const yerlyColors = ['#ff1744', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0', '#e91e63', '#00bcd4', '#8bc34a', '#ffc107']; 
+            const yerlyColors = ['#ff1744', '#ff9800', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0', '#e91e63', '#00bcd4', '#8bc34a', '#ffc107'];
+
+            // Función para mostrar cuenta regresiva
+            function showCountdown() {
+                let count = 3;
+                countdown.classList.remove('hidden');
+                
+                function updateCountdown() {
+                    if (count > 0) {
+                        countdown.textContent = count;
+                        countdown.style.animation = 'none';
+                        // Forzar reflow para reiniciar la animación
+                        countdown.offsetHeight;
+                        countdown.style.animation = 'countdownPulse 1s ease-in-out';
+                        count--;
+                        setTimeout(updateCountdown, 1000);
+                    } else {
+                        countdown.classList.add('hidden');
+                        // Mostrar botón de iniciar con animación
+                        startButton.classList.remove('hidden');
+                        startButton.style.animation = 'fadeInButton 0.5s ease-out forwards';
+                    }
+                }
+                updateCountdown();
+            }
+
+            // Iniciar cuenta regresiva al cargar la página
+            setTimeout(showCountdown, 500); // Pequeño delay para que cargue todo 
 
             // Partículas de clic mejoradas (chispas)
             let particles = [];
